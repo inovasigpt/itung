@@ -1,18 +1,12 @@
-# 🧮 Itung - Kids Math Learning App
+# 🧮 iTung - Aplikasi Belajar Matematika untuk Anak
 
-<div align="center">
+<p align="center">
+  <img src="public/icons/icon-192x192.svg" alt="iTung Logo" width="120"/>
+</p>
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg?logo=react)
-![Vite](https://img.shields.io/badge/Vite-5.0.0-646CFF.svg?logo=vite)
-![Firebase](https://img.shields.io/badge/Firebase-10.7.0-FFCA28.svg?logo=firebase)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.6-06B6D4.svg?logo=tailwindcss)
-
-**Aplikasi Belajar Matematika yang Menyenangkan untuk Anak-Anak**
-
-*Belajar matematika jadi seru dengan animasi, warna-warna cerah, dan tantangan yang menyenangkan!*
-
-</div>
+<p align="center">
+  <strong>Progressive Web App (PWA) untuk belajar matematika dengan cara yang menyenangkan!</strong>
+</p>
 
 ---
 
@@ -20,36 +14,32 @@
 
 | Fitur | Deskripsi |
 |-------|-----------|
-| 🔢 **4 Operasi Matematika** | Penjumlahan, Pengurangan, Perkalian, Pembagian |
-| 🎯 **3 Level Kesulitan** | Mudah, Sedang, Sulit - sesuai kemampuan anak |
-| 🎮 **Mode Permainan** | 10 soal per sesi dengan progress bar |
-| 🔥 **Sistem Streak** | Motivasi anak dengan streak harian |
-| ⭐ **Sistem Bintang** | Reward untuk setiap jawaban benar |
-| 🔐 **Autentikasi** | Login opsional dengan Firebase |
-| 📱 **Responsif** | Tampilan optimal di HP dan tablet |
-| 🎨 **UI Ramah Anak** | Warna cerah dan animasi menarik |
+| 🎮 **4 Operasi Matematika** | Penjumlahan, Pengurangan, Perkalian, Pembagian |
+| 📊 **4 Tingkat Kesulitan** | Mudah (1-10), Sedang (1-50), Sulit (1-100), Sangat Sulit (1-1000) |
+| 👨‍👩‍👧‍👦 **Multi-Profil** | Beberapa anak bisa punya profil masing-masing |
+| ⭐ **Akumulasi Bintang** | Total bintang tersimpan & ditampilkan |
+| 🔥 **Login Streak** | Tracking hari berturut-turut bermain |
+| 📱 **PWA** | Bisa di-install ke homescreen, bekerja offline |
+| 🔢 **On-Screen NumPad** | Tidak perlu keyboard |
+| ⏭️ **Tombol Skip** | Lewati soal, kembali setelah soal terakhir |
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React 18 + Vite
-- **Styling:** TailwindCSS
-- **Authentication:** Firebase Auth
-- **Routing:** React Router DOM v6
+- **Frontend**: React 18 + Vite
+- **Styling**: Tailwind CSS
+- **PWA**: vite-plugin-pwa
+- **Auth** (Optional): Firebase Authentication
+- **Storage**: localStorage (untuk profil & progress)
 
-## 🚀 Memulai
+---
 
-### Prasyarat
-
-- Node.js 18+ 
-- npm atau yarn
-
-### Instalasi
+## 🚀 Instalasi & Menjalankan
 
 ```bash
 # Clone repository
 git clone https://github.com/inovasigpt/itung.git
-
-# Masuk ke direktori
 cd itung
 
 # Install dependencies
@@ -59,83 +49,100 @@ npm install
 npm run dev
 ```
 
-Buka browser dan akses `http://localhost:5173`
+Buka `http://localhost:5173` di browser.
 
-### Build untuk Produksi
+---
 
-```bash
-npm run build
-npm run preview
-```
+## 📱 Instalasi sebagai PWA
+
+1. Buka aplikasi di Chrome
+2. Klik icon "Install" di address bar, atau
+3. Menu ⋮ → "Install iTung"
+
+---
+
+## 🎮 Cara Bermain
+
+1. **Pilih/Buat Profil** - Setiap anak bisa punya profil sendiri
+2. **Pilih Operasi** - Penjumlahan, Pengurangan, Perkalian, atau Pembagian
+3. **Pilih Tingkat Kesulitan** - Mudah, Sedang, Sulit, atau Sangat Sulit
+4. **Jawab 10 Soal** - Gunakan numpad di layar
+5. **Lihat Hasil** - Dapatkan 1-3 bintang berdasarkan jawaban benar
+
+---
+
+## ⭐ Sistem Bintang
+
+| Jawaban Salah | Bintang |
+|---------------|---------|
+| 0-2 | ⭐⭐⭐ (3 bintang) |
+| 3-5 | ⭐⭐ (2 bintang) |
+| 6+ | ⭐ (1 bintang) |
+
+---
 
 ## 📁 Struktur Project
 
 ```
 itung/
+├── public/icons/          # PWA icons
 ├── src/
-│   ├── components/       # Komponen UI reusable
+│   ├── components/        # Reusable UI components
 │   │   ├── Header.jsx
 │   │   ├── NumPad.jsx
 │   │   ├── ProgressBar.jsx
 │   │   └── ResultPopup.jsx
-│   ├── contexts/         # React Context (Auth)
-│   │   └── AuthContext.jsx
-│   ├── pages/            # Halaman aplikasi
-│   │   ├── Home.jsx           # Pilihan operasi
-│   │   ├── DifficultySelect.jsx  # Pilihan level
-│   │   ├── Game.jsx           # Game utama
-│   │   ├── GameSummary.jsx    # Hasil permainan
-│   │   ├── Login.jsx          # Halaman login
-│   │   ├── SignUp.jsx         # Halaman registrasi
-│   │   └── ForgotPassword.jsx # Reset password
-│   ├── utils/            # Helper functions
-│   │   └── questionGenerator.js
-│   ├── App.jsx           # Root component & routes
-│   ├── main.jsx          # Entry point
-│   ├── firebase.js       # Firebase config
-│   └── index.css         # Global styles
+│   ├── contexts/          # React Context
+│   │   ├── AuthContext.jsx
+│   │   └── ProfileContext.jsx
+│   ├── pages/             # Route pages
+│   │   ├── Home.jsx
+│   │   ├── ProfileSelect.jsx
+│   │   ├── DifficultySelect.jsx
+│   │   ├── Game.jsx
+│   │   └── GameSummary.jsx
+│   └── utils/
+│       └── questionGenerator.js
 ├── index.html
-├── package.json
-├── tailwind.config.js
-├── vite.config.js
-└── README.md
+├── vite.config.js         # PWA configuration
+└── tailwind.config.js     # Kid-friendly color palette
 ```
-
-## 🎮 Cara Bermain
-
-1. **Pilih Operasi** - Pilih jenis operasi matematika (➕ ➖ ✖️ ➗)
-2. **Pilih Kesulitan** - Sesuaikan dengan kemampuan anak
-3. **Mainkan!** - Jawab 10 soal menggunakan numpad
-4. **Lihat Hasil** - Cek skor dan bintang yang didapat
-
-## 📸 Screenshots
-
-*Coming soon...*
-
-## 🤝 Kontribusi
-
-Kontribusi sangat diterima! Silakan:
-
-1. Fork repository ini
-2. Buat branch fitur (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buka Pull Request
-
-## 📄 Lisensi
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## 👨‍💻 Dibuat Oleh
-
-**inovasigpt** - [GitHub](https://github.com/inovasigpt)
 
 ---
 
-<div align="center">
+## 🔧 Konfigurasi Firebase (Opsional)
 
-Made with ❤️ for Indonesian Kids
+Untuk mengaktifkan autentikasi:
 
-⭐ Jangan lupa beri bintang jika project ini bermanfaat!
+1. Buat project di [Firebase Console](https://console.firebase.google.com/)
+2. Enable Email/Password authentication
+3. Update `src/firebase.js` dengan credentials Anda
 
-</div>
+---
+
+## 📝 Changelog
+
+### v1.0.0 (2026-01-17)
+- ✅ Initial release
+- ✅ 4 operasi matematika (+ - × ÷)
+- ✅ 4 tingkat kesulitan
+- ✅ PWA support (installable, offline-capable)
+- ✅ Multi-profil anak dengan localStorage
+- ✅ Akumulasi bintang per profil
+- ✅ Login streak tracking
+- ✅ On-screen numpad
+- ✅ Tombol skip dengan return ke soal yang dilewati
+- ✅ Popup validasi (Benar/Salah)
+- ✅ Firebase auth (opsional)
+
+---
+
+## 📄 License
+
+MIT License - Bebas digunakan untuk keperluan edukasi.
+
+---
+
+<p align="center">
+  Made with ❤️ untuk anak-anak Indonesia
+</p>

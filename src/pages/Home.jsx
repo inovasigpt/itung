@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useProfile } from '../contexts/ProfileContext'
 
 function Home() {
     const navigate = useNavigate()
-    const { currentUser, logout } = useAuth()
+    const { currentProfile, logoutProfile } = useProfile()
 
     const operations = [
         {
@@ -36,12 +36,9 @@ function Home() {
         },
     ]
 
-    const handleLogout = async () => {
-        try {
-            await logout()
-        } catch (error) {
-            console.error('Failed to logout:', error)
-        }
+    const handleSwitchProfile = () => {
+        logoutProfile()
+        navigate('/profiles')
     }
 
     return (
@@ -52,35 +49,26 @@ function Home() {
                     <div>
                         <p className="text-blue-100 text-sm">Selamat Datang! 👋</p>
                         <h1 className="text-2xl font-bold">
-                            Halo, {currentUser ? 'Adik!' : 'Teman!'}
+                            Halo, {currentProfile?.name || 'Teman'}!
                         </h1>
                     </div>
-                    {currentUser ? (
-                        <button
-                            onClick={handleLogout}
-                            className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-kid font-semibold transition-all btn-press"
-                        >
-                            Keluar
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => navigate('/login')}
-                            className="bg-white text-kid-blue px-4 py-2 rounded-kid font-semibold hover:bg-blue-50 transition-all btn-press"
-                        >
-                            Masuk
-                        </button>
-                    )}
+                    <button
+                        onClick={handleSwitchProfile}
+                        className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-kid font-semibold transition-all btn-press text-sm"
+                    >
+                        Ganti Profil
+                    </button>
                 </div>
 
-                {/* Stats */}
+                {/* Stats - Now shows real data! */}
                 <div className="flex gap-4 mt-4">
                     <div className="bg-white/20 backdrop-blur-sm rounded-kid px-4 py-3 flex-1">
-                        <p className="text-blue-100 text-xs">Bintang</p>
-                        <p className="text-xl font-bold">⭐ 0</p>
+                        <p className="text-blue-100 text-xs">Total Bintang</p>
+                        <p className="text-xl font-bold">⭐ {currentProfile?.totalStars || 0}</p>
                     </div>
                     <div className="bg-white/20 backdrop-blur-sm rounded-kid px-4 py-3 flex-1">
                         <p className="text-blue-100 text-xs">Hari Beruntun</p>
-                        <p className="text-xl font-bold">🔥 0</p>
+                        <p className="text-xl font-bold">🔥 {currentProfile?.loginStreak || 0}</p>
                     </div>
                 </div>
             </header>

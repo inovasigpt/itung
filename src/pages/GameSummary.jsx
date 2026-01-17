@@ -1,9 +1,12 @@
+import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useProfile } from '../contexts/ProfileContext'
 import { getOperationName, getDifficultyName } from '../utils/questionGenerator'
 
 function GameSummary() {
     const navigate = useNavigate()
     const location = useLocation()
+    const { addStars, currentProfile } = useProfile()
     const { wrongAttempts = 0, operation, difficulty } = location.state || {}
 
     // Calculate stars based on wrong attempts
@@ -14,6 +17,14 @@ function GameSummary() {
     }
 
     const stars = getStars()
+
+    // Add stars to profile on mount (only once)
+    useEffect(() => {
+        if (stars > 0) {
+            addStars(stars)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []) // Run only once on mount
 
     const getMessage = () => {
         if (stars === 3) return 'Luar Biasa! 🎉'
@@ -31,6 +42,15 @@ function GameSummary() {
         <div className="min-h-screen bg-kid-bg flex flex-col items-center justify-center p-6">
             {/* Result Card */}
             <div className="bg-white rounded-kid-lg shadow-xl p-8 max-w-sm w-full text-center animate-pop-in">
+                {/* Profile Badge */}
+                {currentProfile && (
+                    <div className="inline-flex items-center gap-2 bg-kid-bg rounded-full px-4 py-2 mb-4">
+                        <span className="text-sm font-semibold text-kid-dark">
+                            {currentProfile.name}
+                        </span>
+                    </div>
+                )}
+
                 {/* Operation Badge */}
                 {operation && (
                     <div className="inline-flex items-center gap-2 bg-kid-bg rounded-full px-4 py-2 mb-6">
@@ -65,12 +85,24 @@ function GameSummary() {
                 </p>
 
                 {/* Stats */}
-                <div className="bg-kid-bg rounded-kid p-4 mb-6">
+                <div className="bg-kid-bg rounded-kid p-4 mb-4 space-y-2">
+                    <div className="flex justify-between items-center">
+                        <span className="text-gray-500">Bintang diraih:</span>
+                        <span className="font-bold text-kid-dark">+{stars} ⭐</span>
+                    </div>
                     <div className="flex justify-between items-center">
                         <span className="text-gray-500">Jawaban salah:</span>
                         <span className="font-bold text-kid-dark">{wrongAttempts} kali</span>
                     </div>
                 </div>
+
+                {/* Total Stars Banner */}
+                {currentProfile && (
+                    <div className="bg-gradient-to-r from-kid-yellow to-yellow-400 rounded-kid p-4 mb-6 text-white">
+                        <p className="text-sm opacity-90">Total Bintang Kamu</p>
+                        <p className="text-3xl font-bold">⭐ {currentProfile.totalStars}</p>
+                    </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
